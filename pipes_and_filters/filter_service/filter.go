@@ -16,14 +16,14 @@ func FilterMessage(msg string) bool {
 	return true
 }
 
-func FilterMessages(inputQueue chan map[string]string, outputQueue chan map[string]string) {
+func FilterMessages(messageQueue chan map[string]string) {
 	for {
-		message := <-inputQueue
+		message := <-messageQueue
 		content := message["content"]
 
 		if FilterMessage(content) {
 			fmt.Printf("[Filter Service] Message passed: %s\n", content)
-			outputQueue <- message
+			messageQueue <- message
 		} else {
 			fmt.Printf("[Filter Service] Message filtered: %s\n", content)
 		}

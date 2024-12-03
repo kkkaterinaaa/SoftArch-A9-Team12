@@ -26,9 +26,9 @@ func SendEmail(subject, body string, toEmails []string) {
 	}
 }
 
-func PublishMessages(outputQueue chan map[string]string) {
+func PublishMessages(messageQueue chan map[string]string) {
 	for {
-		message := <-outputQueue
+		message := <-messageQueue
 		alias := message["alias"]
 		content := message["content"]
 		fmt.Printf("[Publish Service] Processing message from %s: %s\n", alias, content)

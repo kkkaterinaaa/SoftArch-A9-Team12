@@ -17,16 +17,15 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	inputQueue := make(chan map[string]string)
-	outputQueue := make(chan map[string]string)
+	messageQueue := make(chan map[string]string)
 
-	go filter_service.FilterMessages(inputQueue, outputQueue)
-	go screaming_service.ScreamMessages(outputQueue, outputQueue)
-	go publish_service.PublishMessages(outputQueue)
+	go filter_service.FilterMessages(messageQueue)
+	go screaming_service.ScreamMessages(messageQueue)
+	go publish_service.PublishMessages(messageQueue)
 
 	router := gin.Default()
 
-	router.POST("/send", handlePostMessage(inputQueue))
+	router.POST("/send", handlePostMessage(messageQueue))
 
 	fmt.Println("Server started on port 8080")
 	if err := router.Run(":8080"); err != nil {
@@ -34,7 +33,7 @@ func main() {
 	}
 }
 
-func handlePostMessage(inputQueue chan map[string]string) gin.HandlerFunc {
+func handlePostMessage(messageQueue chan map[string]string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var data map[string]string
 		if err := c.ShouldBindJSON(&data); err != nil {
@@ -47,7 +46,7 @@ func handlePostMessage(inputQueue chan map[string]string) gin.HandlerFunc {
 			"content": data["content"],
 		}
 
-		inputQueue <- message
+		messageQueue <- message
 
 		c.JSON(200, gin.H{"message": "Message sent successfully"})
 	}
