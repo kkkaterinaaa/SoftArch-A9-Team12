@@ -1,10 +1,10 @@
-# Event-Driven Messaging System with RabbitMQ and Pipes-and-Filters Architecture
+# Event-Driven messaging system with RabbitMQ and Pipes-and-Filters architecture
 
 This project implements an event-driven system using RabbitMQ as the message broker, consisting of four separately deployable services: a user-facing REST API server that receives user messages, a filter service that removes messages containing stop-words, a screaming service that converts messages to uppercase, and a publish service that sends an email with the processed message. Additionally, the project includes an alternative pipes-and-filters architecture where services are directly connected through pipes/queues without the message broker. 
 
-## Event-Driven System vs. Pipes-and-Filters Architecture
-We compared the performance of an Event-Driven System (EDS) using RabbitMQ and a Pipes-and-Filters architecture. The comparison was based on time behavior, resource utilization, and capacity.
-### 1. Time Behavior
+## Event-Driven system vs. Pipes-and-Filters architecture
+We compared the performance of an Event-Driven system (EDS) and a Pipes-and-Filters architecture. The comparison was based on time behavior, resource utilization, and capacity.
+### 1. Time behavior
 #### Event-Driven system (EDS):
 
     Mean Latency: 23.5 ms
@@ -29,7 +29,7 @@ We compared the performance of an Event-Driven System (EDS) using RabbitMQ and a
 
 The EDS outperforms the Pipes-and-Filters architecture in terms of response times, with 50% of requests processed in under 22 ms and 99% within 60 ms, demonstrating RabbitMQ's efficiency in managing high-throughput asynchronous tasks. In contrast, the Pipes-and-Filters system experiences significantly higher latencies, with a mean latency of over 8 seconds and the 99th percentile reaching nearly 20 seconds, indicating difficulties in handling concurrent, asynchronous tasks when using direct pipes between services.
 
-### 2. Resource Utilization
+### 2. Resource utilization
 ##### CPU Usage:
 
     EDS: 0.6%
