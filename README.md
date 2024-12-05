@@ -67,7 +67,7 @@ The performance metrics were collected using the ```loadtest``` tool, which was 
 loadtest -t 20 -T application/json -P '{"alias": "Test Alias", "content": "Test Content"}' http://localhost:8080/send
 ```
 
-During the test, the **mean latency**, **effective requests per second (RPS)**, and **latency percentiles** were recorded. CPU and memory usage statistics were gathered using the **[pidusage](https://github.com/struCoder/pidusage)** project to monitor system resources during the test. These metrics were used to compare the performance of the Event-Driven System and the Pipes-and-Filters architecture under load.
+During the test, the **mean latency**, **effective requests per second (RPS)**, and **latency percentiles** were recorded. CPU and memory usage statistics, which were averaged over the test duration, were gathered using the **[pidusage](https://github.com/struCoder/pidusage)** project to monitor system resources during the test. These metrics were used to compare the performance of the Event-Driven System and the Pipes-and-Filters architecture under load.
 
 # How to Run the System
 
@@ -87,7 +87,7 @@ Before running the project, make sure you have the following installed on your l
 Start by cloning the project repository to your local machine:
 
 ```bash
-git clone https://github.com/iucd2/A9_EDS.git
+git clone https://github.com/kkkaterinaaa/SoftArch-A9-Team12.git
 cd SoftArch-A9-Team12
 cd EDS
 ```
@@ -177,7 +177,7 @@ Before running the project, make sure you have the following installed on your l
 Start by cloning the project repository to your local machine:
 
 ```bash
-git clone https://github.com/iucd2/A9_EDS.git
+git clone https://github.com/kkkaterinaaa/SoftArch-A9-Team12.git
 cd SoftArch-A9-Team12
 cd pipes_and_filters
 ```
