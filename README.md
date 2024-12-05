@@ -2,10 +2,10 @@
 
 This project implements an event-driven system using RabbitMQ as the message broker, consisting of four separately deployable services: a user-facing REST API server that receives user messages, a filter service that removes messages containing stop-words, a screaming service that converts messages to uppercase, and a publish service that sends an email with the processed message. Additionally, the project includes an alternative pipes-and-filters architecture where services are directly connected through pipes/queues without the message broker. 
 
-## Performance Report: Event-Driven System vs. Pipes-and-Filters Architecture
-This report compares the performance of an Event-Driven System (EDS) using RabbitMQ as the message broker and a Pipes-and-Filters architecture where services are connected directly through pipes/queues. The comparison is based on metrics such as time behavior, resource utilization, and capacity.
+## Event-Driven System vs. Pipes-and-Filters Architecture
+We compared the performance of an Event-Driven System (EDS) using RabbitMQ and a Pipes-and-Filters architecture. The comparison was based on time behavior, resource utilization, and capacity.
 ### 1. Time Behavior
-#### Event-Driven System (EDS):
+#### Event-Driven system (EDS):
 
     Mean Latency: 23.5 ms
     Effective Requests per Second (RPS): 831
@@ -16,7 +16,7 @@ This report compares the performance of an Event-Driven System (EDS) using Rabbi
         99%: 60 ms
         100% (longest request): 111 ms
 
-#### Pipes-and-Filters Architecture:
+#### Pipes-and-Filters:
 
     Mean Latency: 8650.6 ms
     Effective Requests per Second (RPS): 1
@@ -35,14 +35,13 @@ The EDS outperforms the Pipes-and-Filters architecture in terms of response time
     EDS: 0.6%
     Pipes-and-Filters: 0.4%
 
-The slightly lower CPU usage in the Pipes-and-Filters architecture (0.4%) compared to the Event-Driven System (0.6%) suggests that, despite its higher latency, the Pipes-and-Filters system may be more lightweight in terms of resource consumption. This could be due to its synchronous processing model, which avoids the overhead of message passing and queuing involved in the RabbitMQ-based EDS, but at the cost of performance and scalability.
 
 ##### Memory Usage:
 
     EDS: 45 MB
     Pipes-and-Filters: 18 MB
 
-The EDS consumes more memory (45 MB) than the Pipes-and-Filters architecture (18 MB), suggesting that RabbitMQ or the additional services in the event-driven system require more memory. Despite the higher memory usage, the event-driven system performs better in terms of response time and throughput. This suggests that the benefits of using RabbitMQ in handling large numbers of asynchronous requests outweigh the additional memory overhead.
+The Pipes-and-Filters architecture has a slight advantage in CPU usage, consuming only 0.4% compared to the 0.6% of the EDS. However, the EDS performs better in terms of throughput and latency despite its higher memory usage (45 MB vs. 18 MB for Pipes-and-Filters). This suggests that while the EDS uses more resources, it provides better scalability and performance for handling large numbers of requests.
 
 ### 3. Capacity
 #### EDS:
@@ -57,9 +56,14 @@ The EDS consumes more memory (45 MB) than the Pipes-and-Filters architecture (18
     Total Time: 20.016 seconds
     Effective RPS: 1
 
-The Event-Driven System (EDS) efficiently processes 16,632 requests in 20 seconds, achieving an effective requests per second rate of 831, demonstrating its scalability and ability to handle high concurrency with low latency. In contrast, the Pipes-and-Filters architecture handles only 22 requests in the same period, with an effective RPS of just 1, highlighting its limited capacity to manage concurrent requests, likely due to its more synchronous and linear processing approach.
+The EDS demonstrates much greater capacity, completing 16,632 requests in 20 seconds with an effective request rate of 831 RPS. On the other hand, the Pipes-and-Filters architecture only processes 22 requests in the same period, highlighting its limited scalability and efficiency in handling concurrent tasks.
 
-### How the Metrics Were Obtained
+### 4. Conclusion
+
+The Event-Driven System provides a more robust and scalable solution for high-throughput, asynchronous workloads, with lower latency and better performance in terms of resource usage and capacity. The Pipes-and-Filters architecture, while potentially more lightweight in terms of CPU and memory, struggles to match the EDS in scalability and responsiveness, making it less suitable for handling large volumes of concurrent requests. Therefore, for systems requiring high performance and concurrency, an Event-Driven System is a more efficient choice.
+
+
+### Metrics collection sources
 
 The performance metrics were collected using the ```loadtest``` tool, which was configured to send HTTP POST requests to the system's `/send` endpoint. The load test was executed with a target time of 20 seconds, 20 concurrent clients, and a JSON payload containing an alias and content. The command used for the test was:
 
